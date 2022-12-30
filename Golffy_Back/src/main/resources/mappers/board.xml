@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.golffy.model.dao.BoardDao">
+
+	<select id="selectAll" resultType="Board">
+		select * from board where board_deleted = 0;
+	</select>
+	
+	<select id="selectOne" resultType="Board" parameterType="int">
+		select * from board where board_id = #{board_id} and board_deleted = 0;
+	</select>
+	
+	<insert id="insertBoard" parameterType="Board">
+		insert into board 
+		(user_pid, user_nick, board_title, board_content)
+		values 
+		(#{user_pid}, #{user_nick}, #{board_title}, #{board_content})
+	</insert>
+	
+	<update id="deleteBoard" parameterType="int">
+		update board
+		set board_deleted = 1
+		where board_id = #{board_id}
+	</update>
+	
+	<update id="updateBoard" parameterType="Board">
+		update board
+		set board_title = #{board_title}, board_content = #{board_content}
+		where board_id = #{board_id}
+	</update>
+	<update id="updateViewCnt" parameterType="int">
+		update board
+		set board_viewcnt = board_viewcnt + 1
+		where board_id = #{board_id}
+	</update>
+	 <select id="boardCnt" parameterType="String" resultType="int">
+        select count(*) from board where user_nick = #{user_nick} and board_deleted=0
+    </select>
+		
+</mapper>

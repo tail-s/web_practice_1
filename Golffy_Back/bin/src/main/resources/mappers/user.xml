@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.golffy.model.dao.UserDao">
+
+	<select id="selectUser" resultType="User" parameterType="String">
+		select * from user where user_id = #{user_id}
+	</select>
+	
+	<update id="deleteUser" parameterType="int">
+		update user set user_deleted = 1 where user_pid = #{user_pid}
+	</update>
+	
+	<update id="updateUser" parameterType="User">
+		update user set user_pw = #{user_pw}, user_nick = #{user_nick} where user_pid = #{user_pid}
+	</update>
+	
+	<insert id="insertUser" parameterType="User">
+		insert into user (user_id, user_pw, user_nick) values (#{user_id}, #{user_pw}, #{user_nick})
+	</insert>
+	
+	<select id="idCheck" parameterType="String" resultType="int">
+		select count(*) from user where user_id = #{user_id}
+	</select>
+	
+	<select id="loginCheck" parameterType="String" resultType="int">
+		select count(*) from user where user_id = #{user_id} and user_pw = #{user_pw}
+	</select>
+
+</mapper>

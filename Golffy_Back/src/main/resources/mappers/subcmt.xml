@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.golffy.model.dao.SubcmtDao">
+
+	<!-- 선택된 게시글의 board_id를 참조하도록 수정해야 함 /where board_id = #{} ~ / -->
+	<select id="selectAll" resultType="Subcmt">
+		select * from subcmt where subcmt_deleted = 0;
+	</select>
+	
+	<select id="selectOne" resultType="Subcmt" parameterType="int">
+		select * from subcmt where subcmt_id = #{subcmt_id} and subcmt_deleted = 0;
+	</select>
+	
+	<insert id="insertSubcmt" parameterType="Cmt">
+		insert into subcmt 
+		(user_nick, user_pid, subcmt, cmt_id)
+		values 
+		(#{user_nick}, #{user_pid}, #{subcmt}, #{cmt_id})
+	</insert>
+	
+	<update id="deleteSubcmt" parameterType="int">
+		update subcmt
+		set subcmt_deleted = 1
+		where subcmt_id = #{subcmt_id}
+	</update>
+	
+	<update id="updateSubcmt" parameterType="Cmt">
+		update subcmt
+		set subcmt = #{subcmt}
+		where subcmt_id = #{subcmt_id}
+	</update>
+
+
+</mapper>

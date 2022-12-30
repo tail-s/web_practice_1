@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.golffy.model.dao.CmtDao">
+
+	<!-- 선택된 게시글의 board_id를 참조하도록 수정해야 함 /where board_id = #{} ~ / -->
+	<select id="selectAll" resultType="Cmt" parameterType="int">
+		select * from cmt where board_id = #{board_id} and cmt_deleted = 0;
+	</select>
+	
+	<select id="selectOne" resultType="Cmt" parameterType="int">
+		select * from cmt where cmt_id = #{cmt_id} and cmt_deleted = 0;
+	</select>
+	
+	<insert id="insertCmt" parameterType="Cmt">
+		insert into cmt 
+		(user_nick, user_pid, cmt, board_id)
+		values 
+		(#{user_nick}, #{user_pid}, #{cmt}, #{board_id})
+	</insert>
+	
+	<update id="deleteCmt" parameterType="int">
+		update cmt
+		set cmt_deleted = 1
+		where cmt_id = #{cmt_id}
+	</update>
+	
+	<update id="updateCmt" parameterType="Cmt">
+		update cmt
+		set cmt = #{cmt}
+		where cmt_id = #{cmt_id}
+	</update>
+	 <select id="cmtcnt" parameterType="String" resultType="int">
+        select count(*) from cmt where user_nick = #{user_nick} and cmt_deleted=0
+    </select>
+</mapper>
